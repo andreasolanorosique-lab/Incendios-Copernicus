@@ -1,17 +1,9 @@
 import requests
 
-url = (
-    "https://services.arcgis.com/fFPraSowbm3gs7ek/"
-    "arcgis/rest/services?f=pjson"
-)
+url = "https://maps.effis.emergency.copernicus.eu/geoserver/wfs?service=WFS&request=GetCapabilities"
 
-r = requests.get(url, timeout=30)
+r = requests.get(url, timeout=60)
 
 print("Estado:", r.status_code)
-
-datos = r.json()
-
-print("\nServicios encontrados:\n")
-
-for servicio in datos.get("services", []):
-    print("-", servicio["name"], "(", servicio["type"], ")")
+print("Tipo:", r.headers.get("content-type"))
+print(r.text[:500])
