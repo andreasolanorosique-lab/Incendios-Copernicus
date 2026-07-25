@@ -14,5 +14,8 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Instalar dependencias
+        run: pip install requests
+
       - name: Ejecutar script
         run: python generar_kml.py
