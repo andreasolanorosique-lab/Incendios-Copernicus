@@ -1,31 +1,18 @@
 import requests
-import json
 
 url = (
     "https://services.arcgis.com/fFPraSowbm3gs7ek/"
     "arcgis/rest/services/EIregions_wActiveWildfires/"
-    "FeatureServer/0/query"
+    "FeatureServer?f=pjson"
 )
 
-params = {
-    "where": "1=1",
-    "outFields": "*",
-    "returnGeometry": "true",
-    "f": "geojson"
-}
-
-r = requests.get(url, params=params, timeout=60)
+r = requests.get(url, timeout=30)
 
 print("Estado:", r.status_code)
 
 datos = r.json()
 
-print("Tipo:", datos["type"])
-print("Número de incendios:", len(datos["features"]))
+print("\nCapas disponibles:\n")
 
-if datos["features"]:
-    primero = datos["features"][0]
-
-    print("Geometría:", primero["geometry"]["type"])
-    print("Campos disponibles:")
-    print(list(primero["properties"].keys()))
+for capa in datos["layers"]:
+    print(capa["id"], "-", capa["name"])
