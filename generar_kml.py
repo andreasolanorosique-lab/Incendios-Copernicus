@@ -1,9 +1,17 @@
 import requests
 
-url = "https://maps.effis.emergency.copernicus.eu/effis"
+url = (
+    "https://services.arcgis.com/fFPraSowbm3gs7ek/"
+    "arcgis/rest/services/EIregions_wActiveWildfires/"
+    "FeatureServer/0?f=pjson"
+)
 
 r = requests.get(url, timeout=30)
 
-print("URL final:", r.url)
 print("Estado:", r.status_code)
-print("Tipo:", r.headers.get("content-type"))
+
+datos = r.json()
+
+print("Nombre de la capa:", datos["name"])
+print("Tipo de geometría:", datos["geometryType"])
+print("Máximo de registros:", datos["maxRecordCount"])
